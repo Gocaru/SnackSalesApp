@@ -4,40 +4,40 @@ using System.Text.Json.Serialization;
 
 namespace ApiECommerce.Entities
 {
-    public class Produto
+    public class Product
     {
         public int Id { get; set; }
 
         [StringLength(100)]
         [Required]
-        public string? Nome { get; set; }
+        public string? Name { get; set; }
 
         [StringLength(200)]
         [Required]
-        public string? Detalhe { get; set; }
+        public string? Details { get; set; }
 
         [StringLength(200)]
         [Required]
-        public string? UrlImagem { get; set; }
+        public string? UrlImage { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]
-        public decimal Preco { get; set; }
+        public decimal Price { get; set; }
 
         public bool Popular { get; set; }
         
-        public bool MaisVendido { get; set; }
+        public bool BestSeller { get; set; }
         
-        public int EmEstoque { get; set; }
+        public int Stock { get; set; }
         
-        public bool Disponivel { get; set; }
+        public bool Available { get; set; }
         
-        public int CategoriaId { get; set; }
+        public int CategoryId { get; set; }
 
         [JsonIgnore]
-        public ICollection<DetalhePedido>? DetalhesPedido { get; set; }
+        public ICollection<OrderDetail>? OrderDetails { get; set; }
         
         [JsonIgnore]
-        public ICollection<ItemCarrinhoCompra>? ItensCarrinhoCompras { get; set; }
+        public ICollection<ShoppingCartItem>? ShoppingCartItems { get; set; }
     }
 }

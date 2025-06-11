@@ -3,19 +3,19 @@ using System.Text.Json.Serialization;
 
 namespace ApiECommerce.Entities
 {
-    public class Categoria
+    public class Category
     {
         public int Id { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string? Nome { get; set; }
+        public string? Name { get; set; }
 
         [StringLength(200)]
         [Required]
-        public string? UrlImagem { get; set; }
+        public string? UrlImage { get; set; }
 
         [JsonIgnore]
-        public ICollection<Produto>? Produtos { get; set; }
+        public ICollection<Product>? Products { get; set; }
     }
 }

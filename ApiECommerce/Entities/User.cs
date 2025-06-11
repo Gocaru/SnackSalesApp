@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiECommerce.Entities
 {
-    public class Usuario
+    public class User
     {
         public int Id { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string? Nome { get; set; }
+        public string? Name { get; set; }
 
         [StringLength(150)]
         [Required]
@@ -17,16 +17,17 @@ namespace ApiECommerce.Entities
 
         [StringLength(100)]
         [Required]
-        public string? Senha { get; set; }
+        public string? Password { get; set; }
 
         [StringLength(100)]
-        public string? UrlImagem { get; set; }
+        public string? UrlImage { get; set; }
 
         [StringLength(80)]
-        public string? Telefone { get; set; }
+        public string? Phone { get; set; }
 
         [NotMapped]
-        public IFormFile? Imagem { get; set; }
-        public ICollection<Pedido>? Pedidos { get; set; }
+        public IFormFile? Image { get; set; }
+
+        public ICollection<Order>? Orders { get; set; }
     }
 }
