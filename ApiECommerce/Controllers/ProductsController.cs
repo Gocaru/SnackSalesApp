@@ -6,8 +6,9 @@ namespace ApiECommerce.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : Controller
+    public class ProductsController : ControllerBase
     {
+
         private readonly IProductRepository _productRepository;
 
         public ProductsController(IProductRepository productRepository)
@@ -15,37 +16,28 @@ namespace ApiECommerce.Controllers
             _productRepository = productRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetProducts(string Search, int? categoryId = null)
+
+        [HttpGet("popular")]
+        public async Task<IActionResult> GetPopularProducts()
         {
-            IEnumerable<Product> _products;
+            var _products = await _productRepository.GetPopularProductsAsync();
+            return Ok(FormatProducts(_products));
+        }
 
-            if (Search == "categoria" && categoryId != null)
-            {
-                _products = await _productRepository.GetProductsByCategoryAsync(categoryId.Value);
-            }
-            else if (Search == "popular")
-            {
-                _products = await _productRepository.GetPopularProductsAsync();
-            }
-            else if (Search == "maisvendido")
-            {
-                _products = await _productRepository.GetPopularProductsAsync();
-            }
-            else
-            {
-                return BadRequest("Tipo de produto inválido");
-            }
 
-            var Products = _products.Select(p => new
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Price = p.Price,
-                UrlImage = p.UrlImage
-            });
+        [HttpGet("bestsellers")]
+        public async Task<IActionResult> GetBestSellingProducts()
+        {
+            var _products = await _productRepository.GetPopularProductsAsync();
+            return Ok(FormatProducts(_products));
+        }
 
-            return Ok(Products);
+
+        [HttpGet("category/{categoryId}")]
+        public async Task<IActionResult> GetProductsByCategory(int categoryId)
+        {
+            var _products = await _productRepository.GetProductsByCategoryAsync(categoryId);
+            return Ok(FormatProducts(_products));
         }
 
 
@@ -56,19 +48,31 @@ namespace ApiECommerce.Controllers
 
             if (product is null)
             {
-                return NotFound($"Produto com id={id} não encontrado");
+                return NotFound($"Product with id={id} not found");
             }
 
             var productDetail = new
             {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                Details = product.Details,
-                UrlImage = product.UrlImage
+                product.Id,
+                product.Name,
+                product.Price,
+                product.Details,
+                product.UrlImage
             };
 
             return Ok(productDetail);
+        }
+
+
+        private IEnumerable<object> FormatProducts(IEnumerable<Product> products)
+        {
+            return products.Select(p => new
+            {
+                p.Id,
+                p.Name,
+                p.Price,
+                p.UrlImage
+            });
         }
     }
 }

@@ -32,7 +32,7 @@ namespace ApiECommerce.Controllers
             var checkUser = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
             if (checkUser != null)
             {
-                return BadRequest("Já existe um utilizador com este email.");
+                return BadRequest("A user with this email address already exists.");
             }
 
             _appDbContext.Users.Add(user);
@@ -48,7 +48,7 @@ namespace ApiECommerce.Controllers
 
             if (currentUser == null)
             {
-                return NotFound("O utilizador não existe");
+                return NotFound("User not found");
             }
 
             var key = _config["JWT:Key"] ?? throw new ArgumentNullException("JWT:Key", "JWT:Key cannot be null.");
@@ -88,7 +88,7 @@ namespace ApiECommerce.Controllers
 
             if (user == null)
             {
-                return NotFound("Utilizador não encontrado");
+                return NotFound("User not found");
             }
 
             if (image != null)
@@ -105,10 +105,10 @@ namespace ApiECommerce.Controllers
                 user.UrlImage = $"/userimages/{uniqueFileName}";
 
                 await _appDbContext.SaveChangesAsync();
-                return Ok("Imagem enviada com sucesso");
+                return Ok("Image uploaded successfully");
             }
 
-            return BadRequest("Nenhuma imagem enviada");
+            return BadRequest("No image was uploaded");
         }
 
 
@@ -124,7 +124,7 @@ namespace ApiECommerce.Controllers
 
             if (user == null)
             {
-                return NotFound("Utilizador não encontrado");
+                return NotFound("User not found");
             }
 
             var userImage = await _appDbContext.Users
