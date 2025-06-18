@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppSnacks.Pages.LoginPage"
+             BackgroundColor="#118AB2"
+             Title="LoginPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*"
+      RowSpacing="20"
+      Margin="20,150,20,40">
+
+        <Image Grid.Row="0"
+           Source="lanchesico.png"
+           Aspect="AspectFit"
+           HeightRequest="100"
+           WidthRequest="100" />
+        <Label Grid.Row="1"
+           Text="Login"
+           FontAttributes="Bold"
+           HorizontalOptions="Center" />
+
+        <Frame Grid.Row="2"
+           Padding="15"
+           BackgroundColor="#073B4C">
+
+            <VerticalStackLayout>
+
+                <Entry Placeholder="Email"
+                   x:Name="EntEmail"/>
+
+                <Entry Placeholder="Password"
+                   IsPassword="True"
+                   x:Name="EntPassword"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Button Grid.Row="3"
+            Text="Sign in"
+            FontSize="Medium"
+            x:Name="BtnSignIn" 
+            BackgroundColor="#EF476F"
+            Clicked="BtnSignIn_Clicked"/>
+        <HorizontalStackLayout Grid.Row="4"
+                           Spacing="2"
+                           HorizontalOptions="Center"
+                           VerticalOptions="EndAndExpand">
+            <Label Text="Don't have an account? " />
+            <Label Text="Sign up now" TextColor="#EF476F" FontAttributes="Bold">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="TapRegister"
+                                      Tapped="TapRegister_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
+    </Grid>
+
+</ContentPage>

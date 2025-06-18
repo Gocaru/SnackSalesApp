@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppSnacks.Pages.HomePage">
+    
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,3*,Auto,4*" 
+          RowSpacing="18" 
+          Margin="15">
+
+        <VerticalStackLayout Grid.Row="0" 
+                             Spacing="3">
+            <Label x:Name="LblUserName"
+                    FontSize="Large" />
+
+            <Label Text="Feeling hungry? How about a snack?"
+                    FontAttributes="Bold"
+                    TextColor="#06D6A0"
+                    FontSize="Subtitle" />
+        </VerticalStackLayout>
+        <Label Text="Categories"
+               Grid.Row="1"
+               TextColor="#06D6A0" 
+               FontAttributes="Bold"
+               FontSize="Medium" />
+
+        <CollectionView Grid.Row="2"
+                        x:Name="CvCategories"
+                        SelectionMode="Single"
+                        SelectionChanged="CvCategories_SelectionChanged">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="20"
+                   Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout>
+                        <Image HeightRequest="80" 
+                               WidthRequest="80"
+                               Source="{Binding ImagePath}" />
+                        <Label HorizontalOptions="Center"
+                               FontSize="Small" 
+                               Text="{Binding Name}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Grid.Row="3"
+               Text="Best Sellers" 
+               FontSize="Medium" 
+               TextColor="#06D6A0"
+               FontAttributes="Bold" 
+               VerticalOptions="Center" />
+
+        <CollectionView x:Name="CvBestSellers"
+                        Grid.Row="4" 
+                        SelectionMode="Single">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" 
+                                   ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border StrokeShape="RoundRectangle 10,10,10,10">
+                        <Grid>
+                            <Image Aspect="Fill"
+                                   HeightRequest="120" 
+                                   WidthRequest="120"
+                                   Source="{Binding ImagePath}" />
+
+                            <Label TextColor="White"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"
+                                   FontSize="14"
+                                   BackgroundColor="#80000000"
+                                   Padding="5,5" 
+                                   VerticalOptions="End"
+                                   HorizontalOptions="FillAndExpand"
+                                   Text="{Binding Name}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Grid.Row="5"
+                   Text="Populars" 
+                   FontSize="Medium" 
+                   TextColor="#06D6A0"
+                   FontAttributes="Bold" 
+                   VerticalOptions="Center" />
+
+            <CollectionView Grid.Row="6" 
+                            x:Name="CvPopulars" 
+                            SelectionMode="Single">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" 
+                                       ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border VerticalOptions="Start"
+                                StrokeShape="RoundRectangle 10,10,10,10"
+                                Padding="3">
+                            <Grid RowSpacing="3" 
+                                  RowDefinitions="Auto,Auto,Auto">
+                                <Image Aspect="AspectFill"
+                                       HeightRequest="120" 
+                                       WidthRequest="120"
+                                       Source="{Binding ImagePath}" />
+
+                                <Label Grid.Row="1"
+                                       FontAttributes="Bold"
+                                       LineBreakMode="WordWrap"
+                                       MaxLines="2"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       Text="{Binding Name}" />
+
+                                <Label Grid.Row="2"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       Text="{Binding Price, StringFormat='€ {0:F2}'}" />
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+    </Grid>
+
+</ContentPage>

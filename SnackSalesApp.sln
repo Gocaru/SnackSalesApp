@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36109.1 d17.14
+VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiECommerce", "ApiECommerce\ApiECommerce.csproj", "{944A4E0D-3E11-45AE-B994-2B9C8DF1914E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSnacks", "AppSnacks\AppSnacks\AppSnacks.csproj", "{39A6D515-6AF0-E9C6-A588-352B88C6550B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{944A4E0D-3E11-45AE-B994-2B9C8DF1914E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{944A4E0D-3E11-45AE-B994-2B9C8DF1914E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{944A4E0D-3E11-45AE-B994-2B9C8DF1914E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39A6D515-6AF0-E9C6-A588-352B88C6550B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39A6D515-6AF0-E9C6-A588-352B88C6550B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39A6D515-6AF0-E9C6-A588-352B88C6550B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{39A6D515-6AF0-E9C6-A588-352B88C6550B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39A6D515-6AF0-E9C6-A588-352B88C6550B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39A6D515-6AF0-E9C6-A588-352B88C6550B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
