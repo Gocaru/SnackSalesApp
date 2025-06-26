@@ -188,7 +188,7 @@ namespace ApiECommerce.Controllers
 
             if (user is null)
             {
-                return NotFound("Utilizador não encontrado.");
+                return NotFound("User not found.");
             }
 
             var shoppingCartItem = await _appDbContext.ShoppingCartItems.FirstOrDefaultAsync(s =>
@@ -196,11 +196,11 @@ namespace ApiECommerce.Controllers
 
             if (shoppingCartItem != null)
             {
-                if (action.ToLower() == "aumentar")
+                if (action.ToLower() == "increase")
                 {
                     shoppingCartItem.Quantity += 1;
                 }
-                else if (action.ToLower() == "diminuir")
+                else if (action.ToLower() == "decrease")
                 {
                     if (shoppingCartItem.Quantity > 1)
                     {
@@ -213,7 +213,7 @@ namespace ApiECommerce.Controllers
                         return Ok();
                     }
                 }
-                else if (action.ToLower() == "apagar")
+                else if (action.ToLower() == "remove")
                 {
                     // Remove o item do carrinho
                     _appDbContext.ShoppingCartItems.Remove(shoppingCartItem);
@@ -222,7 +222,7 @@ namespace ApiECommerce.Controllers
                 }
                 else
                 {
-                    return BadRequest("Ação Inválida. Use : 'aumentar', 'diminuir', ou 'apagar' para realizar uma ação");
+                    return BadRequest("Invalid action. Use: 'increase', 'decrease', or 'remove' to perform an action.");
                 }
 
                 shoppingCartItem.Total = shoppingCartItem.UnitPrice * shoppingCartItem.Quantity;

@@ -27,6 +27,22 @@ public partial class ShoppingCartPage : ContentPage
     {
         base.OnAppearing();
         await GetShoppingCartItems();
+
+        bool saveAddress = Preferences.ContainsKey("address");
+
+        if (saveAddress)
+        {
+            string name = Preferences.Get("name", string.Empty);
+            string address = Preferences.Get("address", string.Empty);
+            string phone = Preferences.Get("phone", string.Empty);
+
+            LblAddress.Text = $"{name}\n{address} \n{phone}";
+        }
+        else
+        {
+            LblAddress.Text = "Enter your address";
+        }
+
     }
 
     private async Task<bool> GetShoppingCartItems()
@@ -97,28 +113,68 @@ public partial class ShoppingCartPage : ContentPage
 
 
 
-    private void BtnDecrement_Clicked(object sender, EventArgs e)
+    private async void BtnDecrement_Clicked(object sender, EventArgs e)
     {
+        if (sender is Button button && button.BindingContext is ShoppingCartItem cartItem)
+        {
+            if (cartItem.Quantity == 1) return;
+            else
+            {
+                cartItem.Quantity--;
+                UpdateTotalPrice();
+                await _apiService.UpdateCartItemQuantity(cartItem.ProductId, "decrease");
+            }
+        }
 
     }
 
-    private void BtnIncrement_Clicked(object sender, EventArgs e)
+    private async void BtnIncrement_Clicked(object sender, EventArgs e)
     {
+        if (sender is Button button && button.BindingContext is ShoppingCartItem cartItem)
+        {
+            cartItem.Quantity++;
+            UpdateTotalPrice();
+            await _apiService.UpdateCartItemQuantity(cartItem.ProductId, "increase");
+        }
 
     }
 
-    private void BtnDelete_Clicked(object sender, EventArgs e)
+    private async void BtnRemove_Clicked(object sender, EventArgs e)
     {
+        if (sender is not ImageButton button || button.BindingContext is not ShoppingCartItem cartItem)
+        {
+            return;
+        }
 
+        bool reply = await DisplayAlert("Confirm",
+                          "Are you sure you want to remove this item from the cart?", "Yes", "No");
+        if (!reply)
+        {
+            return;
+        }
+
+        var result = await _apiService.UpdateCartItemQuantity(cartItem.ProductId, "remove");
+
+        if (result.Data)
+        {
+            ShoppingCartItems.Remove(cartItem);
+            UpdateTotalPrice();
+        }
+        else
+        {
+            await DisplayAlert("Error", result.ErrorMessage ?? "Could not remove the item. Please try again.", "OK");
+        }
     }
 
     private void BtnEditAddress_Clicked(object sender, EventArgs e)
     {
-
+        Navigation.PushAsync(new AddressPage());
     }
 
     private void TapConfirmOrder_Tapped(object sender, TappedEventArgs e)
     {
 
     }
+
+  
 }
