@@ -1,13 +1,9 @@
 ﻿using AppSnacks.Models;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace AppSnacks.Services
 {
@@ -147,6 +143,34 @@ namespace AppSnacks.Services
                 return new ApiResponse<bool> { ErrorMessage = ex.Message };
             }
         }
+
+        public async Task<ApiResponse<bool>> ConfirmRequest(Request request)
+        {
+            try
+            {
+                var json = JsonSerializer.Serialize(request, _serializerOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await PostRequest("api/Orders", content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorMessage = response.StatusCode == HttpStatusCode.Unauthorized
+                        ? "Unauthorized"
+                        : $"Error sending HTTP request: {response.StatusCode}";
+
+                    _logger.LogError($"Error sending HTTP request: {response.StatusCode}");
+                    return new ApiResponse<bool> { ErrorMessage = errorMessage };
+                }
+                return new ApiResponse<bool> { Data = true };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error while confirming request: {ex.Message}");
+                return new ApiResponse<bool> { ErrorMessage = ex.Message };
+            }
+        }
+
 
         private async Task<HttpResponseMessage> PostRequest(string uri, HttpContent content)
         {

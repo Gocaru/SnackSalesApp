@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppSnacks.Pages.ConfirmedOrderPage"
+             Title="Confirmed Order">
+    
+    <VerticalStackLayout
+      VerticalOptions="CenterAndExpand"
+         HorizontalOptions="CenterAndExpand"
+         Padding="20">
+
+        <Image Source="confirmado.gif"
+               HeightRequest="200" 
+               WidthRequest="200"
+            Aspect="AspectFit" />
+
+        <Label Text="Order confirmed!"
+            FontSize="18"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            VerticalOptions="CenterAndExpand" 
+               TextColor="#06D6A0"   
+               Margin="0,10,0,0" />
+
+        <Button Text="Go Back"
+             FontAttributes="Bold"
+             HorizontalOptions="Center" 
+                x:Name="BtnGoBack"  
+                Clicked="BtnGoBack_Clicked"
+             VerticalOptions="CenterAndExpand" />
+
+    </VerticalStackLayout>
+
+</ContentPage>

@@ -68,7 +68,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\ConfirmedOrderPage.xaml.cs">
+	    <DependentUpon>ConfirmedOrderPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Pages\AddressPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\ConfirmedOrderPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\EmptyShoppingCartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\FavouritesPage.xaml">
