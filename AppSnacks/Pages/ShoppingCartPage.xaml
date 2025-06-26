@@ -2,11 +2,207 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppSnacks.Pages.ShoppingCartPage"
-             Title="ShoppingCartPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Shopping Cart Page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Shopping Cart">
+    
+    <Grid RowDefinitions="Auto,8*,Auto,Auto"
+          Margin="20"
+          RowSpacing="20">
+
+        <CollectionView Grid.Row="1"
+                        Margin="0,0,0,0"
+                        x:Name="CvShoppingCart">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="10"
+                                   Orientation="Vertical" />
+
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10"
+                           CornerRadius="10"
+                           BorderColor="#118AB2"
+                           BackgroundColor="#06D6A0">
+
+                        <Grid RowDefinitions="Auto,Auto,Auto"
+                              ColumnDefinitions="3*,6*,1*"
+                              RowSpacing="5"
+                              ColumnSpacing="15">
+                            <Frame Padding="0"
+                                   HorizontalOptions="Start"
+                                   CornerRadius="15"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="3"
+                                   Grid.Column="0"
+                                   HeightRequest="80"
+                                   WidthRequest="80">
+                                <Image Aspect="Fill"
+                                       Source="{Binding ImagePath}"/>
+                            </Frame>
+                            <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="2"
+                                   FontSize="Subtitle"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center" 
+                                   FontAttributes="Bold"
+                                   Text="{Binding ProductName}"/>
+
+                            <Label Grid.Row="1"
+                                   Grid.Column="1"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center" 
+                                   FontAttributes="Bold"
+                                   Text="{Binding Price,StringFormat='{0:C}'}"/>
+
+                            <HorizontalStackLayout Grid.Row="2"
+                                                   Grid.Column="1"
+                                                   Spacing="10">
+
+                                <Button HeightRequest="25"
+                                        WidthRequest="25"
+                                        CornerRadius="8"
+                                        BackgroundColor="White"
+                                        TextColor="#EF476F"
+                                        BorderColor="#EF476F"
+                                        BorderWidth="1"
+                                        Text="-"
+                                        Padding="0"
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        x:Name="BtnDecrement"
+                                        Clicked="BtnDecrement_Clicked"/>
+
+                                <Label x:Name="LblQuantity"
+                                       TextColor="white"
+                                       FontAttributes="Bold"
+                                       VerticalTextAlignment="Center" 
+                                       Text="{Binding Quantity}"/>
+
+                                <Button HeightRequest="25"
+                                        WidthRequest="25"
+                                        CornerRadius="8"
+                                        BackgroundColor="#FFD166"
+                                        Text="+"
+                                        Padding="0"
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        x:Name="BtnIncrement"
+                                        Clicked="BtnIncrement_Clicked"/>
+
+                            </HorizontalStackLayout>
+
+                            <ImageButton Grid.Row="2"
+                                         Grid.Column="2"
+                                         HeightRequest="25"
+                                         WidthRequest="25"
+                                         Source="delete"
+                                         Padding="0"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"
+                                         x:Name="BtnDelete"
+                                         Clicked="BtnDelete_Clicked"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Frame Grid.Row="2"
+               Padding="10"
+               BackgroundColor="#06D6A0"
+               BorderColor="white">
+
+            <Grid RowDefinitions="Auto,Auto"
+                  ColumnDefinitions="8*,2*">
+
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Delivery Address"
+                       FontAttributes="Bold"
+                       VerticalOptions="Start" />
+
+                <ImageButton Grid.Row="0"
+                             Padding="0"
+                             HeightRequest="25"
+                             WidthRequest="25"
+                             Grid.Column="1"
+                             HorizontalOptions="End"
+                             VerticalOptions="Start"
+                             Source="edit"
+                             x:Name="BtnEditAddress"
+                             Clicked="BtnEditAddress_Clicked"/>
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"
+                       x:Name="LblAddress" />
+            </Grid>
+        </Frame>
+
+        <Frame Grid.Row="3"
+               Padding="10"
+               BorderColor="Transparent"
+               BackgroundColor="#073B4C">
+
+            <Grid RowDefinitions="Auto,Auto"
+                  ColumnDefinitions="5*,5*">
+
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Total"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       Margin="10,0,0,0" />
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       TextColor="White"
+                       Margin="10,0,0,0">
+
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span FontSize="Medium"
+                                      FontAttributes="Bold"
+                                      TextColor="White" />
+                                <Span x:Name="LblTotal"
+                                      TextColor="White" FontAttributes="Bold" 
+                                      FontSize="Medium"/>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <HorizontalStackLayout  Grid.Row="0"
+                                        HorizontalOptions="End"
+                                        Margin="0,0,10,0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="1"
+                                        Spacing="2">
+
+                    <Label Text="Confirm Order "
+                           Padding="0"
+                           VerticalOptions="Center"
+                           BackgroundColor="#118AB2"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+
+                    <Image Source="rightarrow"
+                           HeightRequest="25"
+                           WidthRequest="25"
+                           VerticalOptions="Center" />
+
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="TapConfirmOrder" Tapped="TapConfirmOrder_Tapped" />
+                    </HorizontalStackLayout.GestureRecognizers>
+
+                </HorizontalStackLayout>
+
+            </Grid>
+        </Frame>
+    </Grid>
+    
 </ContentPage>

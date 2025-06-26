@@ -1,5 +1,6 @@
 ﻿using ApiECommerce.Context;
 using ApiECommerce.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -45,14 +46,25 @@ namespace ApiECommerce.Controllers
             return Ok(shoppingCartItems);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ShoppingCartItem shoppingCartItem)
         {
             try
             {
+                var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;  //Obtem o ID do utilizador a partir do token (a forma segura)
+                var user = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
+
+                if (user is null)
+                {
+                    return Unauthorized("User not found or invalid token.");
+                }
+                var authenticatedUserId = user.Id;
+
+                // Ignorar o ClientId que vem do frontend e usar sempre o ID seguro
                 var shoppingCart = await _appDbContext.ShoppingCartItems.FirstOrDefaultAsync(s =>
-                s.ProductId == shoppingCartItem.ProductId &&
-                s.ClientId == shoppingCartItem.ClientId);
+                    s.ProductId == shoppingCartItem.ProductId &&
+                    s.ClientId == authenticatedUserId); // <-- Usar o ID seguro
 
                 if (shoppingCart != null)
                 {
@@ -65,7 +77,7 @@ namespace ApiECommerce.Controllers
 
                     var cart = new ShoppingCartItem()
                     {
-                        ClientId = shoppingCartItem.ClientId,
+                        ClientId = authenticatedUserId,
                         ProductId = shoppingCartItem.ProductId,
                         UnitPrice = shoppingCartItem.UnitPrice,
                         Quantity = shoppingCartItem.Quantity,
@@ -80,7 +92,7 @@ namespace ApiECommerce.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao processar a solicitação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing the request.");
             }
         }
 

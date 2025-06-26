@@ -208,11 +208,20 @@ namespace AppSnacks.Services
         }
 
 
+        public async Task<(List<ShoppingCartItem>? ShoppingCartItems, string? ErrorMessage)> GetShoppingCartItems(int userId)
+        {
+            var endpoint = $"api/ShoppingCartItems/{userId}";
+            return await GetAsync<List<ShoppingCartItem>>(endpoint);
+        }
+
+
+
         private async Task<(T? Data, string? ErrorMessage)> GetAsync<T>(string endpoint)
         {
             try
             {
                 AddAuthorizationHeader();
+
                 var response = await _httpClient.GetAsync(AppConfig.BaseUrl + endpoint);
 
                 if (response.IsSuccessStatusCode)
