@@ -8,17 +8,19 @@ public partial class ProductsListPage : ContentPage
 {
     private readonly ApiService _apiService;
     private readonly IValidator _validator;
+    private readonly FavouritesService _favouritesService;
     private int _categoryId;
     private bool _loginPageDisplayed = false;
 
     public ProductsListPage(int categoryId, string categoryName,
-                              ApiService apiService, IValidator validator)
+                              ApiService apiService, IValidator validator, FavouritesService favouritesService)
     {
         InitializeComponent();
         _apiService = apiService;
         _validator = validator;
         _categoryId = categoryId;
         Title = categoryName ?? "Products";
+        _favouritesService = favouritesService;
     }
 
     protected override async void OnAppearing()
@@ -60,7 +62,7 @@ public partial class ProductsListPage : ContentPage
     private async Task DisplayLoginPage() 
     { 
         _loginPageDisplayed = true;
-        await Navigation.PushAsync(new LoginPage(_apiService, _validator));
+        await Navigation.PushAsync(new LoginPage(_apiService, _validator, _favouritesService));
     }
 
     private void CvProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -72,7 +74,7 @@ public partial class ProductsListPage : ContentPage
         Navigation.PushAsync(new ProductDetailsPage(currentSelection.Id,
                                                     currentSelection.Name!,
                                                     _apiService,
-                                                    _validator));
+                                                    _validator, _favouritesService));
         ((CollectionView)sender).SelectedItem = null;
     }
 }

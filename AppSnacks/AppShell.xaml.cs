@@ -8,20 +8,22 @@ namespace AppSnacks
     {
         private readonly ApiService _apiService;
         private readonly IValidator _validator;
+        private readonly FavouritesService _favouritesService;
 
-        public AppShell(ApiService apiService, IValidator validator)
+        public AppShell(ApiService apiService, IValidator validator, FavouritesService favouritesService)
         {
             InitializeComponent();
             _apiService = apiService ?? throw new ArgumentNullException(nameof(apiService));
             _validator = validator;
+            _favouritesService = favouritesService;
             ConfigureShell();
         }
 
         private void ConfigureShell()
         {
-            var homePage = new HomePage(_apiService, _validator);
-            var shoppingCartPage = new ShoppingCartPage(_apiService, _validator);
-            var favouritesPage = new FavouritesPage();
+            var homePage = new HomePage(_apiService, _validator, _favouritesService);
+            var shoppingCartPage = new ShoppingCartPage(_apiService, _validator, _favouritesService);
+            var favouritesPage = new FavouritesPage(_apiService, _validator, _favouritesService);
             var profilePage = new ProfilePage();
 
             Items.Add(new TabBar

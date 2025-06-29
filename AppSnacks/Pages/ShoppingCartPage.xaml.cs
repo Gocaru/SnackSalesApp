@@ -9,6 +9,7 @@ public partial class ShoppingCartPage : ContentPage
 {
     private readonly ApiService _apiService;
     private readonly IValidator _validator;
+    private readonly FavouritesService _favouritesService;
     private bool _loginPageDisplayed = false;
     private bool _isNavigatingToEmptyCartPage = false;
 
@@ -16,11 +17,12 @@ public partial class ShoppingCartPage : ContentPage
     private ObservableCollection<ShoppingCartItem>
         ShoppingCartItems = new ObservableCollection<ShoppingCartItem>();
 
-    public ShoppingCartPage(ApiService apiService, IValidator validator)
+    public ShoppingCartPage(ApiService apiService, IValidator validator, FavouritesService favouritesService)
     {
         InitializeComponent();
         _apiService = apiService;
         _validator = validator;
+        _favouritesService = favouritesService;
     }
 
     protected override async void OnAppearing()
@@ -143,7 +145,7 @@ public partial class ShoppingCartPage : ContentPage
     {
         _loginPageDisplayed = true;
 
-        await Navigation.PushAsync(new LoginPage(_apiService, _validator));
+        await Navigation.PushAsync(new LoginPage(_apiService, _validator, _favouritesService));
     }
 
 

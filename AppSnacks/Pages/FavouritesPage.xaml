@@ -2,11 +2,58 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppSnacks.Pages.FavouritesPage"
-             Title="FavouritesPage">
+             Title="Favourites">
     <VerticalStackLayout>
-        <Label 
-            Text="Favourites Page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+        <Label x:Name="LblWarning" 
+               Text="No favourite item selected."
+               FontSize="15"
+               FontAttributes="Bold"
+               TextColor="Red"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               IsVisible="False"/>
+
+        <CollectionView x:Name="CvProducts"
+                    SelectionMode="Single"
+                    Margin="5"
+                    SelectionChanged="CvProducts_SelectionChanged">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                             Span="2"
+                             HorizontalItemSpacing="10"
+                             VerticalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border VerticalOptions="Start"
+                        StrokeShape="RoundRectangle 10,10,10,10"
+                        Padding="10">
+                        <Grid RowSpacing="5"
+                          RowDefinitions="Auto,Auto,Auto">
+
+                            <Image Aspect="AspectFill"
+                                   HeightRequest="130"
+                                   Source="{Binding ImageUrl}" />
+
+                            <Label Grid.Row="1"
+                               FontAttributes="Bold"
+                               LineBreakMode="WordWrap"
+                               FontSize="12"    
+                               MaxLines="2"
+                               Text="{Binding Name}" />
+
+                            <Label Grid.Row="2"
+                               FontAttributes="Bold"
+                               Text="{Binding Price,StringFormat='R$ {0:F2}'}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
+
 </ContentPage>

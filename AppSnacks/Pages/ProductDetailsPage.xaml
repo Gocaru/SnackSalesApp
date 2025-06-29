@@ -13,7 +13,7 @@
                VerticalOptions="Start"
                Aspect="AspectFit"/>
 
-        <ImageButton x:Name="ImageBtnFavorite"
+        <ImageButton x:Name="ImageBtnFavourite"
                      Grid.Row="0"
                      HeightRequest="40"
                      WidthRequest="40"
@@ -24,7 +24,7 @@
                      BackgroundColor="#FFD166"
                      HorizontalOptions="End"
                      VerticalOptions="Start"
-                     Clicked="ImageBtnFavorite_Clicked"/>
+                     Clicked="ImageBtnFavourite_Clicked"/>
 
         <HorizontalStackLayout Spacing="20"                               
                                HorizontalOptions="Center"
