@@ -171,7 +171,31 @@ namespace AppSnacks.Services
             }
         }
 
+        public async Task<ApiResponse<bool>> UploalUserImage(byte[] imageArray)
+        {
+            try
+            {
+                var content = new MultipartFormDataContent();
+                content.Add(new ByteArrayContent(imageArray), "image", "image.jpg");
+                var response = await PostRequest("api/users/uploaduserphoto", content);
 
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorMessage = response.StatusCode == HttpStatusCode.Unauthorized
+                      ? "Unauthorized"
+                      : $"Error sending HTTP request: {response.StatusCode}";
+
+                    _logger.LogError($"Error sending HTTP request: {response.StatusCode}");
+                    return new ApiResponse<bool> { ErrorMessage = errorMessage };
+                }
+                return new ApiResponse<bool> { Data = true };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error uploading user image: {ex.Message}");
+                return new ApiResponse<bool> { ErrorMessage = ex.Message };
+            }
+        }
         private async Task<HttpResponseMessage> PostRequest(string uri, HttpContent content)
         {
 
@@ -294,6 +318,13 @@ namespace AppSnacks.Services
         }
 
 
+        public async Task<(ProfileImage? profileImage, string? ErrorMessage)> GetProfileUserImage()
+        {
+            string endpoint = "api/users/GetUserImage";
+            return await GetAsync<ProfileImage>(endpoint);
+        }
+
+
         private async Task<(T? Data, string? ErrorMessage)> GetAsync<T>(string endpoint)
         {
             try
@@ -353,6 +384,9 @@ namespace AppSnacks.Services
                     new AuthenticationHeaderValue("Bearer", token);
             }
         }
+
+
+
 
     }
 }

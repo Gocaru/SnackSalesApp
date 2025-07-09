@@ -10,5 +10,7 @@ namespace AppSnacks
     {
         public static readonly string BaseUrl = "https://qr82pv0n-7243.uks1.devtunnels.ms/";
         public static readonly string homePageTitle = "Gon Snacks";
+
+        public static readonly string StandardProfileImage = "Resources/Images/uploadphoto.png";
     }
 }
