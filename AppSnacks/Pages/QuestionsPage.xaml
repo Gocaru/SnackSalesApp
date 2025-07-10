@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="AppSnacks.Pages.QuestionsPage"
+             Title="FAQs">
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="15">
+            <Label Text="Frequently Asked Questions"
+                   FontSize="Medium"
+                   TextColor="#118AB2"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <Label Text="How do I place an order?"
+                           FontSize="15"
+                           FontAttributes="Bold" />
+                </toolkit:Expander.Header>
+                <toolkit:Expander.Content>
+                    <Label Text="To place an order, browse our snack menu, select the desired items, add them to your cart, and proceed to checkout to complete your purchase."
+                           TextColor="#118AB2"
+                           FontSize="12" />
+                </toolkit:Expander.Content>
+            </toolkit:Expander>
+
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <Label Text="What payment methods are accepted?"
+                           FontSize="15"
+                           FontAttributes="Bold" />
+                </toolkit:Expander.Header>
+                <toolkit:Expander.Content>
+                    <Label Text="We accept credit and debit cards, MBway, and cash on delivery."
+                           TextColor="#118AB2"
+                           FontSize="12" />
+                </toolkit:Expander.Content>
+            </toolkit:Expander>
+
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <Label Text="Can I track the status of my order?"
+                           FontSize="15"
+                           FontAttributes="Bold" />
+                </toolkit:Expander.Header>
+                <toolkit:Expander.Content>
+                    <Label Text="Yes, you can track your order status in the 'My Orders' section of our app."
+                           TextColor="#118AB2"
+                           FontSize="12" />
+                </toolkit:Expander.Content>
+            </toolkit:Expander>
+
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <Label Text="How long does delivery take?"
+                           FontSize="15"
+                           FontAttributes="Bold" />
+                </toolkit:Expander.Header>
+                <toolkit:Expander.Content>
+                    <Label Text="Delivery time may vary depending on your location and current demand. Typically, orders are delivered within 45 minutes."
+                            TextColor="#118AB2"
+                           FontSize="12" />
+                </toolkit:Expander.Content>
+            </toolkit:Expander>
+
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <Label Text="Can I cancel or modify my order?"
+                           FontSize="15"
+                           FontAttributes="Bold" />
+                </toolkit:Expander.Header>
+                <toolkit:Expander.Content>
+                    <Label Text="You can cancel or modify your order within 10 minutes of placing it. To do so, please contact our support team through the app."
+                           TextColor="#118AB2"
+                           FontSize="12" />
+                </toolkit:Expander.Content>
+            </toolkit:Expander>
+
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <Label Text="What should I do if I receive the wrong order?"
+                           FontSize="15"
+                           FontAttributes="Bold" />
+                </toolkit:Expander.Header>
+                <toolkit:Expander.Content>
+                    <Label Text="If you receive an incorrect order, contact our support team immediately so we can resolve the issue as quickly as possible."
+                           TextColor="#118AB2"
+                           FontSize="12" />
+                </toolkit:Expander.Content>
+            </toolkit:Expander>
+
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <Label Text="How can I contact support?"
+                           FontSize="15"
+                           FontAttributes="Bold" />
+                </toolkit:Expander.Header>
+                <toolkit:Expander.Content>
+                    <Label Text="You can contact our support team Monday to Friday by email at contact@snaks.com or by phone at (14) 9876-0011, from 8:00 AM to 6:00 PM."
+                           TextColor="#118AB2"
+                           FontSize="12" />
+                </toolkit:Expander.Content>
+            </toolkit:Expander>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

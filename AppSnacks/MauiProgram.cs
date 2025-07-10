@@ -1,6 +1,7 @@
 ﻿using AppSnacks.Services;
 using AppSnacks.Validations;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 
 namespace AppSnacks
 {
@@ -11,6 +12,7 @@ namespace AppSnacks
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
