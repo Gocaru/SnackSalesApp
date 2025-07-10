@@ -177,7 +177,7 @@ namespace AppSnacks.Services
             {
                 var content = new MultipartFormDataContent();
                 content.Add(new ByteArrayContent(imageArray), "image", "image.jpg");
-                var response = await PostRequest("api/users/uploaduserphoto", content);
+                var response = await PostRequest("api/users/uploadimage", content);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -203,6 +203,7 @@ namespace AppSnacks.Services
 
             try
             {
+                AddAuthorizationHeader();
                 var result = await _httpClient.PostAsync(enderecoUrl, content);
                 return result;
             }
@@ -320,9 +321,27 @@ namespace AppSnacks.Services
 
         public async Task<(ProfileImage? profileImage, string? ErrorMessage)> GetProfileUserImage()
         {
-            string endpoint = "api/users/GetUserImage";
+            string endpoint = "api/users/userimage";
             return await GetAsync<ProfileImage>(endpoint);
         }
+
+        public async Task<(List<OrderByUser>?, string? ErrorMessage)> GetOrdersByUser(int userId)
+        {
+
+            string endpoint = $"api/orders/GetOrdersByUser/{userId}";
+
+            return await GetAsync<List<OrderByUser>>(endpoint);
+        }
+
+        public async Task<(List<OrderDetail>?, string? ErrorMessage)> GetOrderDetails(int orderId)
+        {
+            string endpoint = $"api/orders/GetOrderDetails/{orderId}";
+
+            return await GetAsync<List<OrderDetail>>(endpoint);
+        }
+
+
+
 
 
         private async Task<(T? Data, string? ErrorMessage)> GetAsync<T>(string endpoint)

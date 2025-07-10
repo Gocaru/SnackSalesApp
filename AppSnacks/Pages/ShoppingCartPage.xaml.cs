@@ -110,7 +110,7 @@ public partial class ShoppingCartPage : ContentPage
             }
 
             CvShoppingCart.ItemsSource = ShoppingCartItems;
-            UpdateTotalPrice(); // Atualizar o preco total ap?s atualizar os itens do carrinho
+            UpdateTotalPrice();
 
             if (!ShoppingCartItems.Any())
             {
@@ -136,7 +136,7 @@ public partial class ShoppingCartPage : ContentPage
         }
         catch (Exception ex)
         {
-            DisplayAlert("Erro", $"An error occurred while updating the total price: {ex.Message}", "OK");
+            await DisplayAlert("Erro", $"An error occurred while updating the total price: {ex.Message}", "OK");
         }
 
     }
@@ -158,7 +158,7 @@ public partial class ShoppingCartPage : ContentPage
             else
             {
                 cartItem.Quantity--;
-                UpdateTotalPrice();
+                await UpdateTotalPrice();
                 await _apiService.UpdateCartItemQuantity(cartItem.ProductId, "decrease");
             }
         }
@@ -170,7 +170,7 @@ public partial class ShoppingCartPage : ContentPage
         if (sender is Button button && button.BindingContext is ShoppingCartItem cartItem)
         {
             cartItem.Quantity++;
-            UpdateTotalPrice();
+            await UpdateTotalPrice();
             await _apiService.UpdateCartItemQuantity(cartItem.ProductId, "increase");
         }
 
@@ -195,7 +195,7 @@ public partial class ShoppingCartPage : ContentPage
         if (result.Data)
         {
             ShoppingCartItems.Remove(cartItem);
-            UpdateTotalPrice();
+            await UpdateTotalPrice();
         }
         else
         {

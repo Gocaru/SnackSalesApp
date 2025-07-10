@@ -1,4 +1,5 @@
 ﻿using ApiECommerce.Context;
+using ApiECommerce.Dtos;
 using ApiECommerce.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -116,26 +117,33 @@ namespace ApiECommerce.Controllers
         [HttpGet("userimage")]
         public async Task<IActionResult> GetUserImage()
         {
-            //see if user is logged
+            // 1. Obter o email do utilizador a partir do token
             var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
-            //locate user
-            var user = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
+            // Se por alguma razão o token não tiver o email
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized("Email claim not found in token.");
+            }
+
+            // 2. Encontrar o utilizador na base de dados (pode simplificar a sua consulta)
+            var user = await _appDbContext.Users
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(u => u.Email == userEmail);
 
             if (user == null)
             {
                 return NotFound("User not found");
             }
 
-            var userImage = await _appDbContext.Users
-                .Where(x => x.Email == userEmail)
-                .Select(x => new
-                {
-                    x.UrlImage,
-                })
-                .SingleOrDefaultAsync();
+            // 3. Criar e preencher o DTO com a informação necessária
+            var responseDto = new UserImageDto
+            {
+                UrlImage = user.UrlImage // Mapear o campo da base de dados para a propriedade do DTO
+            };
 
-            return Ok(userImage);
+            // 4. Retornar o DTO. O ASP.NET Core irá serializá-lo para JSON automaticamente.
+            return Ok(responseDto);
         }
     }
 }

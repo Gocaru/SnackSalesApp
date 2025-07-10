@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppSnacks.Pages.OrdersPage"
+             Title="Orders">
+    <VerticalStackLayout>
+
+        <ActivityIndicator x:Name="loadOrdersIndicator"
+                   IsRunning="false"
+                   IsVisible="false"
+                   Color="#118AB2"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+
+        <CollectionView x:Name="CvOrders"
+                  Margin="20"
+                  SelectionMode="Single"
+                  SelectionChanged="CvOrders_SelectionChanged">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                             ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="15"
+                      Stroke="#FFD166"
+                      StrokeShape="RoundRectangle 10">
+
+                        <Grid RowDefinitions="Auto,Auto,Auto"
+                        ColumnDefinitions="3*,7*">
+
+                            <Label Grid.Row="0"
+                             Grid.Column="0"
+                               FontSize="12"  
+                             Text="Order Id" />
+                            <Label Grid.Row="0"
+                             Grid.Column="1"
+                             Text="{Binding Id}"
+                             FontSize="12"  
+                             FontAttributes="Bold"/>
+                            <Label Grid.Row="1"
+                             Grid.Column="0"
+                             FontSize="12"  
+                             Text="Order date" />
+                            <Label Grid.Row="1"
+                             Grid.Column="1"
+                               FontSize="12"  
+                             Text="{Binding OrderDate, StringFormat='{0:dd.MM.yyyy hh:mm}'}"
+                             FontAttributes="Bold"/>
+                            <Label Grid.Row="2"
+                             Grid.Column="0"
+                             FontSize="12"  
+                             Text="Total" />
+                            <Label Grid.Row="2"
+                             Grid.Column="1">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="€" FontSize="12"  />
+                                            <Span  Text="{Binding Total}" FontAttributes="Bold" FontSize="12"  />
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+
+</ContentPage>

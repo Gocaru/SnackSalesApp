@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppSnacks.Pages.OrderDetailsPage"
+             Title="Order Details">
+    <VerticalStackLayout>
+
+        <ActivityIndicator x:Name="loadIndicator"
+                           IsRunning="false"
+                           IsVisible="false"
+                           Color="#118AB2"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+
+        <CollectionView x:Name="CvOrderDetails" Margin="20">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <Border Padding="10" Stroke="#06D6A0" StrokeShape="RoundRectangle 10">
+
+                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="2*,8*" ColumnSpacing="10">
+
+                            <Image Grid.Row="0"
+                           VerticalOptions="Start"
+                           Aspect="Fill"
+                           HeightRequest="60"
+                           WidthRequest="60"
+                           Grid.RowSpan="3"
+                           Grid.Column="0"
+                           Source="{Binding ImagePath}" />
+
+                            <Label Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{Binding ProductName}" />
+                            <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding ProductPrice, StringFormat='€{0:F2}'}" />
+                            <Label Grid.Row="2"
+                           Grid.Column="1">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="x " />
+                                        <Span Text="{Binding Quantity}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.Footer>
+                <HorizontalStackLayout HorizontalOptions="End"
+                               Spacing="10">
+                    <Label Text="Total :" />
+                    <Label  x:Name="LblTotal" />
+                </HorizontalStackLayout>
+            </CollectionView.Footer>
+
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

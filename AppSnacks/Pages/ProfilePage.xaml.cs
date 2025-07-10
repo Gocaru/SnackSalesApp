@@ -123,7 +123,7 @@ public partial class ProfilePage : ContentPage
 
     private void TapRequests_Tapped(object sender, TappedEventArgs e)
     {
-
+        Navigation.PushAsync(new OrdersPage(_apiService, _validator, _favouritesService));
     }
 
     private void MyAccount_Tapped(object sender, TappedEventArgs e)
