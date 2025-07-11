@@ -80,17 +80,18 @@ namespace ApiECommerce.Controllers
         {
 
             var orders = await _appDbContext.Orders
-                .Where(o => o.UserId == userId)
-                .OrderByDescending(o => o.OrderDate)
-                .Select(o => new
-                {
-                    Id = o.Id,
-                    Total = o.Total,
-                    OrderDate = o.OrderDate,
-                })
-                .ToListAsync();
+                            .AsNoTracking() 
+                            .Where(o => o.UserId == userId)
+                            .OrderByDescending(o => o.OrderDate)
+                            .Select(o => new UserOrderDto
+                            {
+                                Id = o.Id,
+                                Total = o.Total,
+                                OrderDate = o.OrderDate
+                            })
+                            .ToListAsync();
 
-            if (orders == null || orders.Count == 0)
+            if (orders == null || !orders.Any())
             {
                 return NotFound("No orders were found for the specified user.");
             }
@@ -109,21 +110,20 @@ namespace ApiECommerce.Controllers
         {
 
             var orderDetails = await _appDbContext.OrderDetails
-                .Where(od => od.OrderId == orderId)
-                .Include(od => od.Order)
-                .Include(od => od.Product)
-                .Select(od => new OrderDetailDto
-                {
-                    Id = od.Id,
-                    Quantity = od.Quantity,
-                    SubTotal = od.Total,
-                    ProductName = od.Product!.Name,
-                    ProductImage = od.Product.UrlImage,
-                    ProductPrice = od.Product.Price
-                })
-                .ToListAsync();
+                               .AsNoTracking()
+                               .Where(od => od.OrderId == orderId)
+                               .Select(od => new OrderDetailDto
+                               {
+                                   Id = od.Id,
+                                   Quantity = od.Quantity,
+                                   SubTotal = od.Total,
+                                   ProductName = od.Product!.Name,
+                                   ProductImage = od.Product.UrlImage,
+                                   ProductPrice = od.Product.Price
+                               })
+                               .ToListAsync();
 
-            if (orderDetails == null || orderDetails.Count == 0)
+            if (orderDetails == null || !orderDetails.Any())
             {
                 return NotFound("Order details not found.");
             }

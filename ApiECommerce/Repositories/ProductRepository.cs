@@ -22,21 +22,24 @@ namespace ApiECommerce.Repositories
 
         public async Task<IEnumerable<Product>> GetPopularProductsAsync()
         {
-            return await _dbContext.Products
+            return await _dbContext.Products.AsNoTracking()
                 .Where(p => p.Popular)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Product>> GetBestSellerProductsAsync()
         {
-            return await _dbContext.Products.Where(p => p.BestSeller).ToListAsync();
+            return await _dbContext.Products.AsNoTracking().
+                Where(p => p.BestSeller)
+                .ToListAsync();
         }
 
 
 
         public async Task<Product> GetProductDetailsAsync(int id)
         {
-            var productDetail = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+            var productDetail = await _dbContext.Products.AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             return productDetail!;
         }
