@@ -105,6 +105,8 @@ namespace ApiECommerce.Controllers
 
                 user.UrlImage = $"/userimages/{uniqueFileName}";
 
+                _appDbContext.Entry(user).State = EntityState.Modified;
+
                 await _appDbContext.SaveChangesAsync();
                 return Ok("Image uploaded successfully");
             }
